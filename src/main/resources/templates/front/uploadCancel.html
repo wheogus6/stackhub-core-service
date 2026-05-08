@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       layout:decorate="~{front/layout/frontLayout}">
+<th:block layout:fragment="content">
+    <link th:inline="css" rel="stylesheet" th:href="@{/css/front/uploadComplete.css}">
+
+    <div class="pageWrapper">
+        <div class="uploadComplete">
+            <p class="completeText">사용 중지되었습니다.</p>
+        </div>
+    </div>
+    <script th:src="@{/js/front/uploadCancel.js}"></script>
+</th:block>
+</html>

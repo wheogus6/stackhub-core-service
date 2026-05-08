@@ -1,0 +1,17 @@
+# IntelliJ
+.idea/
+*.iml
+.DS_Store
+# Gradle
+.gradle/
+gradlew
+build/
+generated/
+out/
+
+# Java
+*.class
+
+# Logs
+logs/
+*.log

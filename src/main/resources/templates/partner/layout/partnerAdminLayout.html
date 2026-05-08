@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta property="og:title" content="펫시네">
+    <meta property="og:description" content="언제나 그리운 마음을 함께 합니다.">
+    <meta property="og:image" content="https://www.petcineftp.com/images/petcine/setting/thumnail.jpg">
+    <th:block th:replace="~{partner/fragments/partnerAdminConfig :: configFragment}"></th:block>
+</head>
+<body>
+    <th:block th:replace="~{partner/fragments/partnerAdminHeader :: headerFragment}"></th:block>
+
+    <th:block layout:fragment="content"></th:block>
+
+    <th:block th:replace="~{partner/fragments/partnerAdminFooter :: footerFragment}"></th:block>
+</body>
+</html>

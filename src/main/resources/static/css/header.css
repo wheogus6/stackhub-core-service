@@ -1,0 +1,77 @@
+body {
+    margin: 0;
+}
+
+.header_con {
+    display: flex;
+    align-items: center;
+    justify-self: center;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0,0,0,0.19), 0 3px 6px rgba(0,0,0,0.23);
+    width: 100%;
+}
+
+.headerImg {
+    width: 80px;
+    padding-right: 180px;
+}
+
+.headerNav {
+    
+    margin: 0 auto;
+    /* width: 50%; */
+    width: 850px;
+    height: 78px;
+    align-items: center;
+ 
+}
+
+.headerNav > ul {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+.headerNav li {
+    list-style: none;
+    padding-top: 8px;
+}
+
+.headerNav a {
+    text-decoration: none;
+    color:black;
+}
+
+.menu {
+    font-weight: 500;
+    font-size: 15px;
+    cursor: pointer;
+    /* padding-left: 20px; */
+}
+
+.headerButton {
+    border-style: none;
+    border-radius: 5px;
+    background-color: #9A9A9A;
+    /*padding-right: 18px;*/
+    padding-right: 10px;
+    padding-left: 10px;
+    /*padding-left: 18px;*/
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.headerButton span {
+    color: white;
+}
+
+.inlineDisplay {
+    display: none;
+}
+
+input::-webkit-inner-spin-button {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}

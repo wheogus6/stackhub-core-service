@@ -1,0 +1,347 @@
+html {
+  margin: 0 auto;
+}
+@media all and (min-width: 769px) {
+  .partner_admin_con {
+    width: 840px;
+    margin: 30px auto;
+  }
+
+  .partner_admin_con h4 {
+    padding-left: 20px;
+  }
+
+  .member_registration {
+    border: 0.5px solid #8d8d8d;
+    background-color: #eeeeee;
+    font-size: 12px;
+    border-radius: 5px;
+  }
+
+  .orderlist {
+    border: 0.5px solid #8d8d8d;
+    background-color: #eeeeee;
+    font-size: 12px;
+    border-radius: 5px;
+  }
+
+  .registration_top_tab {
+    border-collapse: collapse;
+    border: 0.5px solid #8d8d8d;
+    margin: 30px auto;
+    width: 780px;
+  }
+
+  .orderlist_top_tab {
+    border-collapse: collapse;
+    border: 0.5px solid #8d8d8d;
+    margin: 30px auto;
+    width: 780px;
+  }
+
+  tr th,
+  td {
+    border: 0.5px solid #8d8d8d;
+    background-color: #f8f8f8;
+  }
+
+  .member_info td span {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .member_info td button {
+    margin-left: 20px;
+    background-color: #9a9a9a;
+  }
+
+  .partner_select td {
+    padding-left: 20px;
+  }
+
+  .partner_select td select {
+    height: 26px;
+  }
+
+  .member_info td select {
+    height: 26px;
+  }
+
+  .url_copy td {
+    padding-left: 20px;
+  }
+
+  .member_search td {
+    padding-left: 20px;
+  }
+
+  .url_copy input {
+    width: 418px;
+  }
+
+  .url_copy button {
+    margin-left: 20px;
+    background-color: #9a9a9a;
+  }
+
+  .search {
+    text-align: center;
+    padding: 15px 13px;
+  }
+
+  th {
+    padding: 10px 13px;
+  }
+
+  td input {
+    width: 140px;
+    height: 20px;
+  }
+
+  .bottom_tab {
+    border-collapse: collapse;
+    border: 0.5px solid #8d8d8d;
+    margin: 30px auto;
+    width: 780px;
+    text-align: center;
+  }
+
+  tbody td {
+    padding: 10px 13px;
+  }
+
+  #detail_bt {
+    border-style: none;
+    background-color: #d9d9d9;
+  }
+
+  button {
+    border-style: none;
+    cursor: pointer;
+    width: 80px;
+    height: 30px;
+    border-radius: 5px;
+    color: black;
+  }
+
+  #search_bt {
+    background-color: #9a9a9a;
+  }
+
+  #reset_bt {
+    background-color: #d9d9d9;
+  }
+
+  #excel_bt {
+    background-color: #1e7145;
+    color: white;
+    width: 130px;
+  }
+
+  .down_bt {
+    background-color: plum;
+  }
+
+  .member_detail_bt {
+    background-color: #d9d9d9;
+  }
+
+  .not_yet_upload_bt {
+    background-color: #d9d9d9;
+  }
+
+  #finish_video_bt {
+    background-color: #70f1ad;
+  }
+}
+
+@media all and (max-width: 768px) {
+  .partner_admin_con {
+    width: 90%;
+    margin: 30px auto;
+     /*background-color: red;*/
+  }
+  .partner_admin_con h4 {
+    font-size: 1rem;
+    padding: 0;
+  }
+  .member_registration,
+  .orderlist {
+    width: 100%;
+  }
+  .registration_top_tab,
+  .orderlist_top_tab {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+  }
+  .member_info td button {
+    background-color: #9a9a9a;
+  }
+
+  .url_copy button {
+    background-color: #9a9a9a;
+  }
+
+  .member_info,
+  .url_copy,
+  .partner_select,
+  .member_search,
+  tr {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+  }
+
+  th {
+    font-size: 0.9rem;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .member_info td,
+  .url_copy td,
+  .partner_select td,
+  .member_search td {
+    width: 100%;
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto;
+    gap: 20px;
+    padding: 25px 10px;
+  }
+
+  .member_info td span {
+    padding: 0;
+  }
+
+  .member_info input,
+  .url_copy input,
+  .member_search input,
+  .partner_select select,
+  #startDate,
+  #endDate {
+    width: 100%;
+    height: 30px;
+    padding: 0;
+  }
+
+  .member_info input::placeholder {
+    padding-left: 10px;
+  }
+
+  .dateSelect td {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 10px;
+  }
+
+  .search {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 30px 10px;
+  }
+
+  tr th,
+  td {
+    border: 0.5px solid #8d8d8d;
+    background-color: #f8f8f8;
+    box-sizing: border-box;
+  }
+
+  .bottom_tab {
+    margin-top: 40px;
+    width: 100%;
+    table-layout: fixed; /* 테이블 레이아웃 고정 */
+    border-collapse: collapse; /* 테이블 셀 경계를 합침 */
+  }
+
+  .bottom_tab tr,
+  .bottom_tab tr {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .bottom_tab th,
+  .bottom_tab td {
+    width: 14.28%;
+    text-align: center;
+    padding: 5px;
+    font-size: 0.8em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    word-wrap: break-word;
+    word-break: break-all;
+    word-wrap: break-word;
+    hyphens: auto;
+  }
+
+  .bottom_tab th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+
+  .bottom_tab td {
+    text-align: center;
+    word-break: normal;
+  }
+  button {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+    height: 40px;
+    border-radius: 10px;
+    border-style: none;
+    color: black;
+  }
+  #reset_bt {
+    background-color: #d9d9d9;
+  }
+  #excel_bt {
+    width: 100%;
+    background-color: #1e7145;
+    color: white;
+  }
+
+  .bottom_tab button {
+    font-size: 0.6rem;
+    height: 100%;
+  }
+  #search_bt {
+    background-color: #9a9a9a;
+  }
+
+  .down_bt {
+    background-color: plum;
+  }
+
+  .member_detail_bt {
+    background-color: #d9d9d9;
+  }
+
+  .not_yet_upload_bt {
+    background-color: #d9d9d9;
+  }
+
+  #finish_video_bt {
+    background-color: #70f1ad;
+  }
+
+  .petname {
+    display: none;
+  }
+
+  #detail_bt {
+    border-style: none;
+    background-color: #d9d9d9;
+  }
+}

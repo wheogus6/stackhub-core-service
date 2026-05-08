@@ -1,0 +1,122 @@
+.partner_detail_con {
+  width: 840px;
+  margin: 30px auto;
+}
+
+.partner_detail_con h4 {
+  padding-left: 20px;
+}
+
+.partner_detail {
+  border: 0.5px solid #8d8d8d;
+  background-color: #eeeeee;
+  font-size: 12px;
+  border-radius: 5px;
+}
+
+.partner_detail_tab {
+  border-collapse: collapse;
+  border: 0.5px solid #8d8d8d;
+  margin: 30px auto;
+  width: 780px;
+}
+
+tr th,
+td {
+  border: 0.5px solid #8d8d8d;
+  background-color: #f8f8f8;
+}
+
+th {
+  padding: 15px 13px;
+}
+
+.partner_detail_td {
+  text-align: center;
+}
+
+td input {
+  width: 140px;
+  height: 20px;
+}
+
+#memorial_url {
+  color: #0094ff;
+  font-weight: bold;
+}
+
+#edit {
+  padding: 15px 13px;
+  text-align: center;
+}
+
+#note {
+  padding: 15px 13px;
+  text-align: center;
+}
+
+textarea {
+  width: 99%;
+  height: 130px;
+}
+
+button {
+  border-style: none;
+  cursor: pointer;
+  width: 80px;
+  height: 30px;
+  border-radius: 5px;
+}
+
+#edit_bt {
+  background-color: #9a9a9a;
+}
+
+#list_bt {
+  background-color: #d9d9d9;
+}
+
+#memorial_url {
+  color: #0094ff;
+  font-weight: bold;
+}
+
+#down_url {
+  color: #0094ff;
+  font-weight: bold;
+}
+
+.filebox .upload-name {
+  display: inline-block;
+  height: 20px;
+  padding: 0 10px;
+  vertical-align: middle;
+  /* border: 1px solid #dddddd; */
+  width: 50%;
+  color: #999999;
+  margin-left: 7%;
+}
+
+.filebox label {
+  display: inline-block;
+  line-height: 30px;
+  border-style: none;
+  cursor: pointer;
+  width: 80px;
+  height: 30px;
+  border-radius: 5px;
+  color: #fff;
+  vertical-align: middle;
+  background-color: #999999;
+  margin-left: 10px;
+  text-align: center;
+}
+
+.filebox input[type="file"] {
+  position: absolute;
+  width: 0;
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+}

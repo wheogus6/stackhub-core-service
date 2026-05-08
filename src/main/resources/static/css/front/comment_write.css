@@ -1,0 +1,86 @@
+html,
+body {
+  max-width: 580px;
+  margin: 0 auto;
+  overflow-x: hidden;
+  background-color: #fff;
+  font-family: "NanumEongGeongKwiCe";
+  background-color: #f8f8f8;
+}
+
+.write_container {
+  position: relative;
+  margin: 60px auto 20px ;
+  color: #2b2a2a;
+  -webkit-text-size-adjust: none;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  text-align: center;
+  
+}
+
+.write_container input {
+    width: 341px;
+    height: 28px;
+    margin: 15px auto;
+    justify-content: center;
+    border: 1px solid #474747;
+    font-size: 10px;
+}
+
+.write_container input::placeholder {
+    padding: 10px;
+    color: #727171;
+}
+
+.write_container textarea {
+    width: 341px;
+    height: 151px;
+    margin: 0 auto;
+    justify-content: center;
+    border: 1px solid #474747;
+    font-size: 10px;
+}
+
+.write_container textarea::placeholder {
+    padding: 10px;
+    color: #727171;
+}
+
+#complete_btn{
+    width: 105px;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+#complete_btn button {
+    width: 105px;
+    padding: 0;
+    border-style: none;
+    background-color: transparent;
+    margin-bottom: 40px;
+}
+
+#complete_btn button:hover {
+    cursor: pointer;
+}
+
+#complete_btn img {
+    width: 100%;
+    margin: 0;
+}
+#saveBtn {
+    cursor: pointer;
+}
+
+.textLengthWrap {
+    width: 341px;
+    height: 30px;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 10px;
+    align-items: center;
+    margin: 0 auto;
+    font-size: 0.8rem;
+}

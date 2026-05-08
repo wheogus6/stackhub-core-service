@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       layout:decorate="~{front/layout/frontLayout}">
+<th:block layout:fragment="content">
+<link th:href="@{/css/front/comment_write.css}" rel="stylesheet"/>
+    <div class="write_container">
+        <input type="text" id="name" placeholder="이름을 입력해주세요">
+        <div class="textLengthWrap">
+            <p class="textCount">0자</p>
+            <p class="textTotal">/500자</p>
+        </div>
+        <textarea id="comment" placeholder="내용을 입력해주세요. (500자 이내)" maxlength="500" style="resize: none"></textarea>
+    </div>
+    <div id="complete_btn">
+    <button id="saveBtn"><img th:src="@{/img/front/write_complete.png}"/></button>
+    </div>
+</body>
+    <script th:src="@{/js/front/commentWrite.js}"></script>
+</th:block>
+</html>

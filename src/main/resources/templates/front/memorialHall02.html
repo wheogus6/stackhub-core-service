@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       layout:decorate="~{front/layout/frontLayout}">
+<th:block layout:fragment="content">
+  <link th:href="@{/css/front/memorialHall02.css}" rel="stylesheet"/>
+  <link th:href="@{/css/front/sakura.css}" rel="stylesheet"/>
+  <link href="https://hangeul.pstatic.net/hangeul_static/css/NanumMyeongjoYetHangul.css"
+          rel="stylesheet"/>
+
+
+  <div id="sakuraCanvas"> </div>
+    <div class="mobile_container">
+      <article class="head">
+        <aside>
+          <img th:src="@{/img/front/topFlower_img02.png}"/>
+        </aside>
+        <div class="titleHelper">
+          <div class="title">
+            <h1 id="petNameTitle"></h1>
+          </div>
+        </div>
+        <div id="main_img">
+          <div id="main_photo_bg">
+            <img th:src="@{/img/front/main_photo02.png}" width="100%" id="mainImgBg"/>
+          </div>
+          <div id="main_photo">
+            <img id="m01" width="100%"/>
+          </div>
+        </div>
+      </article>
+    </div>
+
+
+      <div class="middle">
+
+        <div id="finishInfo" style="display: none; font-size: 20px">
+          <p>
+            모바일 추모장 이용기한이 <br>만료되었습니다.<br>
+            서비스 연장을 원하실 경우<br>
+            고객센터로 연락해 주시기 바랍니다.<br>
+            펫시네 고객 센터<br><br>
+            032-710-3599
+          </p>
+        </div>
+
+
+        <div id="letter">
+          <div class="letterHelper">
+            <div class="letterT">
+              <p id="letter-title">너를 기억하며</p>
+            </div>
+          </div>
+          <p id="letter_text">
+            죽음은 끝이 아니며, <br />
+            영혼은 누군가의 마음속 추억에서<br />
+            영원히 살거라 믿어. <br />항상 너와 행복했던 기억을 <br />떠올릴
+            테니 그 추억에서 행복했으면 해. <br />소중했던 가족이자 친구였던
+            <br />너와의 추억을 영원히 간직할게.<br />
+            <span>사랑해.</span>
+          </p>
+        </div>
+
+        <div class="d_day" id="dDay">
+          <h5>"무지개 다리를 건넌지 <spna id="countDate"></spna>일이 지났습니다."</h5>
+        </div>
+
+        <div class="videoHelper">
+          <div class="videoTitle">
+            <p id="videoT">추모영상</p>
+          </div>
+        </div>
+
+
+        <div id="video">
+          <div id="video_player">
+            <video
+              width="100%"
+              id="videoUrl"
+              poster="/img/front/video_thumb.jpeg"
+              controls>
+            </video>
+          </div>
+        </div>
+      </div>
+
+      <div class="bottom" id="bottom">
+        <div>
+          <a id="goCommentBtn" >
+            <img th:src="@{/img/front/comment_btn02.png}" style="cursor: pointer"/>
+          </a>
+
+          <a id="kakaoBtn" href="javascript:shareMessage()">
+            <img th:src="@{/img/front/kakao_btn02.png}" />
+          </a>
+        </div>
+      </div>
+
+  <div class="imgDownload" id="downloadImgBtn">추모장 이미지 다운받기</div>
+
+      <div id="footer_btn">
+        <span id="homepage">0000 장례식장</span>
+      </div>
+    </div>
+
+
+  <div class="mobile_container2G">
+    <div class="petcineLogo">
+      <img th:src="@{/img/logo.png}"/>
+    </div>
+
+    <div class="title2gHelper">
+      <div class="title2g">
+        <div class="title2gTwo">
+          <p id="title-text2g">고마워 잊지 않을게</p>
+        </div>
+      </div>
+    </div>
+    <div id="main_photo_bg2g">
+      <img th:src="@{/img/front/download/2g_BG02.png}" width="100%"/>
+    </div>
+    <div id="main_photo2g">
+      <img id="m01Download" crossorigin="anonymous" />
+    </div>
+    <div class="partnerLogo">
+      <img id="ptLogoImg" crossorigin="anonymous" />
+    </div>
+  </div>
+
+
+  <input type="hidden" id="memorialCode" th:value="${memorialCode}">
+  <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+  <script th:src="@{/js/front/sakura.js}"></script>
+  <script th:src="@{/js/front/memorialHall02.js}"></script>
+
+</th:block>
+</html>

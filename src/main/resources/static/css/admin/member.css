@@ -1,0 +1,175 @@
+.member_con {
+  width: 840px;
+  margin: 30px auto;
+}
+
+.member_con h4 {
+  padding-left: 20px;
+}
+
+.member_list {
+  border: 0.5px solid #8d8d8d;
+  background-color: #eeeeee;
+  font-size: 12px;
+  border-radius: 5px;
+}
+
+.top_tab {
+  border-collapse: collapse;
+  border: 0.5px solid #8d8d8d;
+  margin: 30px auto;
+  width: 780px;
+}
+
+tr th,
+td {
+  border: 0.5px solid #8d8d8d;
+  background-color: #f8f8f8;
+}
+
+#partner_select td { 
+  padding-left: 20px;
+}
+
+#partner_select td select {
+  height: 26px;
+}
+
+#member_search td {
+  padding-left: 20px;
+}
+
+#member_search td select {
+  height: 26px;
+}
+
+#search {
+  text-align: center;
+  padding: 15px 13px;
+}
+
+th {
+  padding: 10px 13px;
+}
+
+td input {
+  width: 140px;
+  height: 20px;
+}
+
+.bottom_tab {
+  border-collapse: collapse;
+  border: 0.5px solid #8d8d8d;
+  margin: 30px auto;
+  width: 780px;
+  text-align: center;
+}
+
+tbody td {
+  padding: 10px 13px;
+}
+
+.detail_bt {
+  border-style: none;
+  background-color: #d9d9d9;
+}
+
+button { 
+  border-style: none;
+  cursor: pointer;
+  width: 80px;
+  height: 30px;
+  border-radius: 5px;
+}
+
+#search_bt {
+  background-color: #9a9a9a;
+}
+
+#reset_bt {
+  background-color: #d9d9d9;
+}
+
+#memorial_url {
+  color: #0094ff;
+  font-weight: bold;
+}
+
+.btnCollect > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-style: none;
+}
+
+.btnCollect button {
+  padding: 0;
+  margin: 0;
+  border-style: none;
+  cursor: pointer;
+  font-size: 0.8rem;
+  width: 50px;
+  height: 27px;
+  border-radius: 5px;
+
+}
+
+
+/*.bottomTabBtn {*/
+/*  padding: 0;*/
+/*  margin: 0;*/
+/*  border-style: none;*/
+/*  cursor: pointer;*/
+/*  font-size: 0.8rem;*/
+/*  width: 50px;*/
+/*  height: 27px;*/
+/*  border-radius: 5px;*/
+/*  background-color: #9a9a9a;*/
+/*}*/
+
+/*.bottomTabBtn:nth-child(2) {*/
+/*  background-color: rgb(245, 167, 50);*/
+/*  color: black;*/
+/*}*/
+
+/*.bottomTabBtn:last-child {*/
+/*  background-color: rgb(224, 28, 28);*/
+/*  color: white;*/
+/*}*/
+
+
+.detailBtn {
+  background-color: #9a9a9a;
+}
+.cancelBtn {
+  background-color: rgb(245, 167, 50);
+  color: black;
+}
+.restoreBtn {
+  background-color: #0094ff;
+}
+
+.deleteBtn {
+  background-color: rgb(224, 28, 28);
+  color: white;
+}
+
+.memberListTr {
+  position: relative;
+}
+
+.deactivated-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(167, 167, 167, 0.7);
+  z-index: 1;
+  overflow: hidden;
+}
+
+.deactivated {
+  pointer-events: none;
+}

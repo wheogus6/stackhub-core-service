@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       layout:decorate="~{partner/layout/partnerAdminLayout}">
+<th:block layout:fragment="content">
+
+    <header>
+      <div id="partner_header"></div> 
+    </header>
+    <div class="partner_admin_con">
+      <h4>고객등록</h4>
+      <div class="member_registration">
+        <table class="registration_top_tab">
+          <tr class="member_info">
+            <th>고객정보</th>
+            <td>
+                <span>고객이름</span>
+                <input type="text" id="uName" name="name" placeholder="고객이름">
+                <span>연락처</span>
+                <input type="text" id="mobileNo" name="mobileNo" placeholder="연락처">
+              <button id="createMemberBtn">신청하기</button>
+            </td>
+          </tr>
+          <tr class="url_copy">
+            <th>제작 URL주소</th>
+            <td>
+              <input type="text" class="inlineDisplayNone" id="memberCreateUrl" readonly>
+              <button id="copyUrl" class="inlineDisplayNone">URL복사</button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+    <div class="partner_admin_con">
+      <h4>신청내용</h4>
+      <div class="orderlist">
+        <table class="orderlist_top_tab">
+          <form id="searchForm" method="post">
+              <input type="hidden" name="totalSize" id="totalSize" value="">
+              <input type="hidden" name="pageSize" id="pageSize" value="">
+              <input type="hidden" name="size" id="size" value="10">
+<!--              <input type="hidden" name="page" id="page" value="">-->
+              <input type="hidden" name="page" id="page" value="1">
+              <input type="hidden" name="r1" id="r1" value="">
+              <input type="hidden" name="ucode" id="ucode">
+            <tr class="dateSelect">
+              <th>기간 설정</th>
+              <td>
+                <input type="date" id="startDate" name="startDate">
+                <span> ~ </span>
+                <input type="date" id="endDate" name="endDate">
+              </td>
+            </tr>
+            <tr class="member_search">
+              <th>검색</th>
+              <td>
+                <input type="text" id="keyValue" name="keyValue"/> <!--검색 조건은 1. 고객성함 2.반려동물이름 -->
+              </td>
+            </tr>
+          </form>
+
+          <tr>
+            <td class="search" colspan="2">
+              <button id="search_bt">검색</button>
+              <button id="reset_bt">초기화</button>
+              <button id="excel_bt">엑셀 다운로드</button>
+            </td>
+          </tr>
+        </table>
+
+        <table class="bottom_tab">
+          <thead>
+            <tr>
+              <th>신청일</th>
+              <th>고객이름</th>
+              <th>반려동물이름</th>
+              <th>연락처</th>
+              <th>진행상태</th>
+              <th>영상</th>
+              <th>상세보기</th>
+            </tr>
+          </thead>
+          <tbody id="memberList">
+
+          </tbody>
+        </table>
+        <table class="page_tab">
+          <tbody id="pageZone">
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <form id="dtlForm">
+        <input type="hidden" name="memorialCode" id="memorialCode">
+    </form>
+
+    <script th:src="@{/js/partner/partnerAdmin.js}"></script>
+</th:block>
+</html>

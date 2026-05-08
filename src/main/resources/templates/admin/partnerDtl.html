@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       layout:decorate="~{admin/layout/adminLayout}">
+<th:block layout:fragment="content">
+
+    <div class="partner_detail_con">
+      <h4>업체정보</h4>
+      <div class="partner_detail">
+        <table class="partner_detail_tab">
+          <form id="companyForm">
+            <tr id="idArea">
+              <th>업체 아이디 <span>*</span></th>
+              <td class="partner_detail_td">
+                <input type="text" name="id" id="ptId" placeholder="아이디를 입력해주세요." value="" autocomplete="false"/>
+              </td>
+              <th>비밀번호 <span>*</span></th>
+              <td class="partner_detail_td">
+                <input type="password" name="pwd" id="pwd" placeholder="비밀번호를 입력해주세요." autocomplete="new-password"/>
+              </td>
+            </tr>
+            <tr>
+              <th>업체이름 <span>*</span></th>
+              <td class="partner_detail_td">
+                <input type="text" name="ptName" id="ptName" placeholder="업체명을 입력해주세요."/>
+              </td>
+              <th>연락처 <span>*</span></th>
+              <td class="partner_detail_td">
+                <input type="number" name="telNo" id="telNo" placeholder="'-'를 빼고 입력해주세요."/>
+              </td>
+            </tr>
+            <tr>
+              <th>홈페이지</th>
+              <td class="partner_detail_td">
+                <input type="text" id="homepage" name="homepage" placeholder="홈페이지를 입력해주세요."/>
+              </td>
+              <th>업체주소</th>
+              <td class="partner_detail_td">
+                <input type="text" id="addr" name="addr" placeholder="주소를 입력해주세요."/>
+              </td>
+            </tr>
+            <tr>
+              <th>업체로고</th>
+              <td class="filebox" colspan="3">
+                <input class="upload-name" id="fileName" value="" placeholder="첨부된 파일이 없습니다." readonly>
+                <label for="file">파일찾기</label>
+                <input type="file" id="file" name="ptLogoImgFile">
+              </td>
+            </tr>
+            <tr>
+              <th>비고</th>
+              <td class="partner_detail_td" colspan="5">
+                <textarea id="memo" name="memo"></textarea>
+              </td>
+            </tr>
+          </form>
+            <tr>
+              <td id="edit" colspan="6">
+                  <button id="newOrEditBtn"></button>
+                  <button id="list_bt">목록</button>
+              </td>
+            </tr>
+        </table>
+      </div>
+    </div>
+  <input type="hidden" id="ptlCode" th:value="${ptlCode}">
+  <script th:src="@{/js/admin/partnerDtl.js}"></script>
+</th:block>
+</html>

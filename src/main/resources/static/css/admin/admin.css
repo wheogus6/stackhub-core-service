@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap');
+
+
+.container {
+    width: 100%;
+    margin-top: 100px;
+    text-align: center;
+    font-family: "Nanum Myeongjo", serif;
+    font-weight: 400;
+    font-style: normal;
+
+}
+
+div img {
+    width: 100px;
+    padding-bottom: 20px;
+}
+
+div input {
+    border: 0.1px solid #8D8D8D;
+    width: 220px;
+    height: 35px;
+    margin-bottom: 10px;
+}
+
+/* div input::placeholder {
+    padding-left: 10px;
+} */
+
+div input {
+    position: relative;
+    padding-left: 15px;
+}
+
+.loginBT {
+    margin-top: 15px;
+    position: relative;
+    width: 240px;
+    height: 40px;
+    border: none;
+    background-color: #8D8D8D;
+    color: white;
+    font-size: 15px;
+    font-weight: 100;
+}
+
+.loginBT:hover {
+    cursor: pointer;
+}
+
+.container a { 
+    color: white;
+    text-decoration: none;
+}
+
+.page{
+    cursor: pointer;
+}
+
+.pagination {
+    list-style-type: none;
+    text-align: center;
+}
+.pagination li {
+    display: inline;
+    margin-right: 5px; /* 각 아이템 사이의 간격 조절 */
+}
+
+
+.page_tab {
+    border-collapse: collapse;
+    border: none;
+    margin: 30px auto;
+    width: 780px;
+    text-align: center;
+}
+
+#excel_bt {
+    background-color: #1e7145;
+    color: white;
+    width: 130px;
+    /* float: right;
+    margin-right: 20px; */
+}
+
+

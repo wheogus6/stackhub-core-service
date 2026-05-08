@@ -1,0 +1,93 @@
+.partner_con {
+    width: 840px;
+    margin: 30px auto;
+  }
+  
+  .partner_con h4 {
+    padding-left: 20px;
+  }
+  
+  .partner_list {
+    border: 0.5px solid #8d8d8d;
+    background-color: #eeeeee;
+    font-size: 12px;
+    border-radius: 5px;
+  }
+  
+  .top_tab {
+    border-collapse: collapse;
+    border: 0.5px solid #8d8d8d;
+    margin: 30px auto;
+    width: 780px;
+  }
+  
+  tr th,
+  td {
+    border: 0.5px solid #8d8d8d;
+    background-color: #f8f8f8;
+  }
+  
+  #partner_select td { 
+    padding-left: 20px;
+  }
+  
+  #partner_select td select {
+    height: 26px;
+  }
+  
+  #new_submit {
+    text-align: center;
+    padding: 15px 13px;
+  }
+  
+  th {
+    padding: 10px 13px;
+  }
+  
+  #partner_search td {
+    padding-left: 20px;
+  }
+
+  td input {
+    width: 140px;
+    height: 20px;
+  }
+  
+  .bottom_tab {
+    border-collapse: collapse;
+    border: 0.5px solid #8d8d8d;
+    margin: 30px auto;
+    width: 780px;
+    text-align: center;
+  }
+  
+  tbody td {
+    padding: 10px 13px;
+  }
+  
+  #detail_bt {
+    border-style: none;
+    background-color: #d9d9d9;
+  }
+  
+  button { 
+    border-style: none;
+    cursor: pointer;
+    width: 80px;
+    height: 27px;
+    border-radius: 5px;
+    background-color: #9a9a9a;
+  }
+  
+  #memorial_url {
+    color: #0094ff;
+    font-weight: bold;
+  }
+
+  #down_url {
+    color: #0094ff;
+    font-weight: bold;
+  }
+
+
+

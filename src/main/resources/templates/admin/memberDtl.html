@@ -1,0 +1,65 @@
+<html  xmlns:th="http://www.thymeleaf.org"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       layout:decorate="~{admin/layout/adminLayout}">
+<link rel="stylesheet" href="../../../../../../../../Desktop/classes/static/css/admin/member_detail.css">
+<th:block layout:fragment="content">
+    <header>
+      <div id="header"></div>
+    </header>
+    <div class="member_detail_con">
+      <h4>회원정보</h4>
+      <div class="member_detail">
+        <table class="member_detail_tab">
+          <tr>
+            <th>업체이름</th>
+            <td class="member_detail_td">
+              <input type="text" id="ptName" readonly/>
+            </td>
+            <th>장례날짜</th>
+            <td class="member_detail_td">
+              <input type="date" id="funeralDate" />
+            </td>
+            <th>연락처</th>
+            <td class="member_detail_td">
+              <input type="number" id="mobileNo"/>
+            </td>
+          </tr>
+          <tr>
+            <th>이름</th>
+            <td class="member_detail_td">
+              <input type="text" id="uname"/>
+            </td>
+            <th>추모관 URL</th>
+            <td colspan="3" class="member_detail_td" id="emptyUrl">
+              <a href="" id="funeralUrl"></a>
+            </td>
+          </tr>
+          <tr>
+            <th>비고</th>
+            <td id="note" colspan="5" class="member_detail_td">
+              <textarea id="memo"></textarea>
+            </td>
+          </tr>
+          <tr>
+            <td id="edit" colspan="6" class="member_detail_td">
+              <button id="edit_bt">수정</button>
+              <button id="list_bt">목록</button>
+            </td>
+          </tr>
+        </table>
+
+        <table class="memorialhallComments">
+          <caption>추모장 댓글</caption>
+
+          <tbody id="commentList">
+
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  <input id="ucode" type="hidden" th:value="${ucode}">
+  <input id="memorial" type="hidden" th:value="${memorialCode}">
+  <script th:src="@{/js/admin/memberDtl.js}"></script>
+</th:block>
+</html>
