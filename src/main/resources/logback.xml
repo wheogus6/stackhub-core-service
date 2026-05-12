@@ -15,7 +15,7 @@
         <file>logs/petcine.log</file>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>logs/petcine.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>logs/core.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>60</maxHistory>
         </rollingPolicy>
 

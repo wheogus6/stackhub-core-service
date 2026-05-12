@@ -5,8 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Component;
-
 import java.util.concurrent.TimeUnit;
+
 
 @Slf4j
 @Component
@@ -18,7 +18,7 @@ public class DistributedLock {
 
     /**
      * 분산락 실행
-     * @param key       락 키 (예: "payment:memberId:1")
+     * @param key       락 키 (예: "payment:memberId")
      * @param waitTime  락 획득 대기시간 (초)
      * @param leaseTime 락 보유시간 (초)
      * @param task      실행할 로직

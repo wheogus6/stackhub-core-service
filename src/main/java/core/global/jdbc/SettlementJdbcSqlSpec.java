@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 
 /**
  * 정산 대용량 처리용 JDBC SQL 스펙
- * couponfree의 CardCompanyShopJdbcSqlSpec 패턴 적용
  *
  * 흐름: TEMP 테이블 생성 → batchUpdate bulk INSERT → MERGE (upsert)
  */
