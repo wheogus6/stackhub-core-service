@@ -31,6 +31,13 @@ public class SettlementWriter implements ItemWriter<Settlement> {
 
     private final JdbcTemplate jdbcTemplate;
 
+     /**
+     * JDBC 기반 대용량 정산 Writer
+     *
+     * JPA saveAll() 대신 TEMP 테이블 + batchUpdate + MERGE(upsert) 패턴 적용
+     * - JPA saveAll: N번 INSERT (JPA 오버헤드 포함)
+     * - 이 방식: 1번 batchUpdate → 1번 MERGE → 완료
+     **/
     @Override
     public void write(Chunk<? extends Settlement> chunk) {
         List<? extends Settlement> items = chunk.getItems();

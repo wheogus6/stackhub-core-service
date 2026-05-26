@@ -1,22 +1,23 @@
 # StackHub Core Service
 
 > 결제 및 정산 시스템 백엔드 서비스
-> 트랜잭션 정합성, 동시성 제어, 대용량 배치 처리에 집중한 포트폴리오 프로젝트
+> 트랜잭션 정합성, 동시성 제어, 대용량 배치 처리, 이벤트 드리븐 아키텍처에 집중한 포트폴리오 프로젝트
 
 ---
 
 ## 기술 스택
 
-| 분류 | 기술                              |
-|------|---------------------------------|
-| Language | Java 21                         |
-| Framework | Spring Boot 3.4.1               |
-| ORM | Spring Data JPA                 |
-| DB | PostgreSQL                      |
-| Cache / Lock | Redis, Redisson                 |
-| Batch | Spring Batch                    |
+| 분류 | 기술 |
+|------|------|
+| Language | Java 21 |
+| Framework | Spring Boot 3.4.1 |
+| ORM | Spring Data JPA |
+| DB | PostgreSQL |
+| Cache / Lock | Redis, Redisson |
+| Batch | Spring Batch |
+| Message Broker | Apache Kafka |
 | API 문서 | Swagger (SpringDoc OpenAPI 2.8) |
-| Build | Gradle                          |
+| Build | Gradle |
 
 ---
 
@@ -35,6 +36,8 @@ core/
       controller/   결제, 충전 API
       dto/
       entity/       Payment (멱등키)
+      event/        PaymentEvent, PaymentEventProducer
+        consumer/   PaymentEventConsumer
       repository/
       service/      PaymentService, ChargeService
     settlement/
@@ -42,7 +45,7 @@ core/
       entity/       Settlement
       repository/
   global/
-    config/         Batch, JpaAuditing, Swagger 설정
+    config/         Batch, JpaAuditing, Swagger, Kafka 설정
     exception/      CustomException, GlobalExceptionHandler
     jdbc/           SettlementJdbcSqlSpec (TEMP 테이블 + MERGE SQL)
     lock/           DistributedLock (Redisson)
@@ -96,7 +99,50 @@ if (Boolean.FALSE.equals(isNew)) {
 
 ---
 
-### 3. 정산 배치 — 대용량 JDBC 처리
+### 3. Kafka 이벤트 드리븐 — 결제 이벤트 발행/구독
+
+결제 완료/실패 시 Kafka 토픽으로 이벤트를 발행합니다. 이를 통해 결제 로직과 후처리 로직(알림, 로그 등)을 느슨하게 분리합니다.
+
+**이벤트 흐름**
+
+```
+결제 요청
+  → PaymentService
+      → 성공 → PaymentEventProducer → payment.completed 토픽
+      → 실패 → PaymentEventProducer → payment.failed 토픽
+                                            ↓
+                                    PaymentEventConsumer 수신
+                                    (실제 운영: 알림/로그 서비스가 구독)
+```
+
+**Producer — 결제 이벤트 발행**
+
+```java
+// memberId를 파티션 키로 사용 → 같은 회원의 이벤트 순서 보장
+kafkaTemplate.send(TOPIC_PAYMENT_COMPLETED, event.getMemberId().toString(), event);
+```
+
+**Consumer — 이벤트 수신**
+
+```java
+@KafkaListener(topics = "payment.completed", groupId = "payment-core-group")
+public void onPaymentCompleted(PaymentEvent event) {
+    // 실제 운영: 알림 발송, 포인트 적립 등 후처리
+}
+```
+
+> 현재 Consumer는 단일 서비스 내 구현으로, 실제 MSA 환경에서는 알림 서비스 / 로그 서비스 등 별도 서비스가 토픽을 구독하는 구조로 확장됩니다.
+
+**Kafka 토픽 구성**
+
+| 토픽 | groupId | 설명 |
+|------|---------|------|
+| payment.completed | payment-core-group | 결제 성공 이벤트 |
+| payment.failed | payment-core-group | 결제 실패 이벤트 |
+
+---
+
+### 4. 정산 배치 — 대용량 JDBC 처리
 
 JPA `saveAll()` 대신 TEMP 테이블 + `batchUpdate` + MERGE(upsert) 패턴을 적용했습니다.
 
@@ -133,7 +179,7 @@ PostgreSQL `ON CONFLICT DO UPDATE`로 동일 회원/날짜 정산이 이미 있�
 
 ---
 
-### 4. 예외 처리 — 도메인별 커스텀 예외
+### 5. 예외 처리 — 도메인별 커스텀 예외
 
 ```java
 // 사용
@@ -174,10 +220,11 @@ http://localhost:8080/swagger-ui/index.html
 - Java 21
 - PostgreSQL
 - Redis
+- Apache Kafka
 
 **설정**
 
-`src/main/resources/application.properties`에서 DB, Redis 연결 정보를 설정합니다.
+`src/main/resources/application.properties`에서 DB, Redis, Kafka 연결 정보를 설정합니다.
 
 ```properties
 spring.datasource.url=jdbc:postgresql://localhost:5432/postgres
@@ -186,11 +233,32 @@ spring.datasource.password=
 
 spring.data.redis.host=localhost
 spring.data.redis.port=6379
+
+spring.kafka.bootstrap-servers=localhost:9092
+```
+
+**Kafka 로컬 실행 (Docker)**
+
+```yaml
+# docker-compose.yml
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    ports:
+      - "2181:2181"
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
 ```
 
 **빌드 및 실행**
 
-```bash(..%2F..%2F..%2F..%2FDesktop%2Ffiles%2FREADME.md)
+```bash
 ./gradlew bootRun
 ```
 

@@ -74,6 +74,9 @@ dependencies {
 	// Spring Batch (정산 배치)
 	implementation 'org.springframework.boot:spring-boot-starter-batch'
 
+	// Kafka
+	implementation 'org.springframework.kafka:spring-kafka'
+
 	// Swagger
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.4'
 
