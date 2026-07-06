@@ -1,6 +1,6 @@
 # StackHub Core Service
 
-> 결제 및 정산 시스템 백엔드 서비스
+> 결제 및 정산 시스템 백엔드 서비스  
 > 트랜잭션 정합성, 동시성 제어, 대용량 배치 처리, 이벤트 드리븐 아키텍처에 집중한 포트폴리오 프로젝트
 
 ---
@@ -41,7 +41,7 @@ core/
       repository/
       service/      PaymentService, ChargeService
     settlement/
-      batch/        Reader, Processor, Writer, Scheduler
+      batch/        Reader(@StepScope), Processor, Writer, Scheduler
       entity/       Settlement
       repository/
   global/
@@ -49,6 +49,40 @@ core/
     exception/      CustomException, GlobalExceptionHandler
     jdbc/           SettlementJdbcSqlSpec (TEMP 테이블 + MERGE SQL)
     lock/           DistributedLock (Redisson)
+```
+
+---
+
+## 시스템 아키텍처
+
+```
+클라이언트
+    │
+    ▼
+PaymentController
+    │
+    ▼
+PaymentService
+    ├─ [1차 방어] Redis 멱등키 (SET NX)
+    │       중복 요청 → DB에서 기존 결과 반환
+    │       결제 실패 → 멱등키 삭제 (재시도 허용)
+    │
+    └─ [2차 방어] Redisson 분산락
+            │
+            ▼
+        processPayment()
+            ├─ PaymentMember.deduct()  ← @Version 낙관적 락
+            ├─ Payment.success() / fail()
+            └─ KafkaProducer
+                    ├─ payment.completed → (MSA: 알림/포인트 서비스)
+                    └─ payment.failed   → (MSA: 실패 알림/재시도 큐)
+
+정산 배치 (매일 02:00)
+    SettlementScheduler
+        └─ SettlementJob
+              ├─ SettlementReader   (@StepScope) — 전날 SUCCESS 결제 집계
+              ├─ SettlementProcessor             — Settlement 엔티티 변환
+              └─ SettlementWriter (JDBC)         — TEMP + batchUpdate + MERGE
 ```
 
 ---
@@ -81,19 +115,33 @@ Redis 장애 시에도 DB 레벨에서 동시 수정을 차단합니다. JPA가 
 
 ---
 
-### 2. 멱등성 처리 — 중복 결제 방지
+### 2. 멱등성 처리 — 중복 결제 방지 + 실패 재시도 허용
 
 ```java
 Boolean isNew = redisTemplate.opsForValue()
     .setIfAbsent(redisKey, "processing", Duration.ofMinutes(10));
 
 if (Boolean.FALSE.equals(isNew)) {
+    // 이미 처리된 요청 → DB에서 기존 결과 반환
     return paymentRepository.findByIdempotencyKey(request.getIdempotencyKey())
             .orElseThrow(PaymentException.DuplicateRequestException::new);
 }
+
+// 결제 실패 시 멱등키 삭제 → 동일 키로 재시도 가능
+try {
+    return distributedLock.execute(...);
+} catch (Exception e) {
+    redisTemplate.delete(redisKey);
+    throw e;
+}
 ```
 
-클라이언트가 UUID 기반 멱등키를 생성해서 요청합니다. Redis `SET NX` 명령어로 원자적으로 중복 여부를 체크하고, 이미 처리된 요청이면 DB에서 기존 결과를 반환합니다. TTL 10분으로 자동 만료됩니다.
+클라이언트가 UUID 기반 멱등키를 생성해서 요청합니다. Redis `SET NX` 명령어로 원자적으로 중복 여부를 체크하고, 이미 처리된 요청이면 DB에서 기존 결과를 반환합니다.
+
+**트레이드오프 인식**
+- 결제 성공 시: 멱등키가 TTL(10분)까지 유지되어 재요청을 차단
+- 결제 실패 시: 멱등키를 즉시 삭제하여 동일 키로 재시도 허용
+- Redis 장애 시: `setIfAbsent`가 null 반환 → 멱등성 보장 불가. 이 경우 DB의 `idempotencyKey unique 제약`이 최후 방어선으로 작동
 
 > DB 대신 Redis에 저장한 이유: 빠른 조회 + TTL 자동 만료로 별도 관리가 필요 없기 때문입니다.
 
@@ -115,23 +163,11 @@ if (Boolean.FALSE.equals(isNew)) {
                                     (실제 운영: 알림/로그 서비스가 구독)
 ```
 
-**Producer — 결제 이벤트 발행**
+**Producer — memberId를 파티션 키로 사용해 같은 회원의 이벤트 순서 보장**
 
 ```java
-// memberId를 파티션 키로 사용 → 같은 회원의 이벤트 순서 보장
 kafkaTemplate.send(TOPIC_PAYMENT_COMPLETED, event.getMemberId().toString(), event);
 ```
-
-**Consumer — 이벤트 수신**
-
-```java
-@KafkaListener(topics = "payment.completed", groupId = "payment-core-group")
-public void onPaymentCompleted(PaymentEvent event) {
-    // 실제 운영: 알림 발송, 포인트 적립 등 후처리
-}
-```
-
-> 현재 Consumer는 단일 서비스 내 구현으로, 실제 MSA 환경에서는 알림 서비스 / 로그 서비스 등 별도 서비스가 토픽을 구독하는 구조로 확장됩니다.
 
 **Kafka 토픽 구성**
 
@@ -140,6 +176,8 @@ public void onPaymentCompleted(PaymentEvent event) {
 | payment.completed | payment-core-group | 결제 성공 이벤트 |
 | payment.failed | payment-core-group | 결제 실패 이벤트 |
 
+> 현재 Consumer는 단일 서비스 내 구현으로, 실제 MSA 환경에서는 알림 서비스 / 로그 서비스 등 별도 서비스가 토픽을 구독하는 구조로 확장됩니다.
+
 ---
 
 ### 4. 정산 배치 — 대용량 JDBC 처리
@@ -147,12 +185,8 @@ public void onPaymentCompleted(PaymentEvent event) {
 JPA `saveAll()` 대신 TEMP 테이블 + `batchUpdate` + MERGE(upsert) 패턴을 적용했습니다.
 
 ```
-JPA saveAll(N건)
-→ N번 INSERT (엔티티 오버헤드 포함)
-
-JDBC TEMP + MERGE
-→ 1번 batchUpdate (bulk INSERT)
-→ 1번 MERGE 쿼리 (upsert)
+JPA saveAll(N건)      → N번 INSERT (엔티티 오버헤드 포함)
+JDBC TEMP + MERGE     → 1번 batchUpdate + 1번 MERGE 쿼리
 ```
 
 ```java
@@ -167,6 +201,10 @@ jdbcTemplate.query(MERGE_TEMP_TO_MAIN, rs -> ...);
 ```
 
 PostgreSQL `ON CONFLICT DO UPDATE`로 동일 회원/날짜 정산이 이미 있으면 UPDATE, 없으면 INSERT합니다.
+
+**`@StepScope` 적용으로 상태 안전성 보장**
+
+`SettlementReader`는 내부에 Queue 상태를 가지므로 `@StepScope`를 적용했습니다. Step 실행마다 새 인스턴스가 생성되어 재실행/병렬 실행 시 상태 꼬임이 없습니다.
 
 **배치 구성**
 
@@ -194,6 +232,19 @@ throw new MemberException.NotFoundException();
 ```
 
 `ResponseCode` enum에 코드 + 메시지 + HTTP 상태를 한 곳에 정의하고, 도메인별 예외 클래스의 static inner class로 구성해 사용처에서 의미가 명확하게 드러나도록 했습니다.
+
+---
+
+## 테스트
+
+```bash
+./gradlew test
+```
+
+| 테스트 클래스 | 검증 내용 |
+|---|---|
+| `PaymentServiceTest` | 정상 결제, 멱등키 중복 차단, 실패 시 멱등키 삭제, 잔액 부족, 회원 없음 |
+| `SettlementWriterTest` | 빈 청크 무시, TEMP→batchUpdate→MERGE 실행 순서, 수수료 계산 |
 
 ---
 

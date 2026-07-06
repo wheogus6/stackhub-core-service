@@ -18,13 +18,13 @@ public class SettlementScheduler {
 
     private final JobLauncher jobLauncher;
     private final Job settlementJob;
-    private final SettlementReader reader;
+
+    // SettlementReader가 @StepScope로 변경되어 Step 실행마다 새 인스턴스 생성
+    // → reset() 수동 호출 불필요
 
     @Scheduled(cron = "0 0 2 * * *") // 매일 새벽 02:00
     public void runSettlement() {
         try {
-            reader.reset(); // Reader 초기화 (재실행 대비)
-
             JobParameters params = new JobParametersBuilder()
                     .addString("settledDate", LocalDate.now().minusDays(1).toString())
                     .addLong("timestamp", System.currentTimeMillis()) // 매번 다른 파라미터로 중복 실행 방지

@@ -50,14 +50,25 @@ public class PaymentService {
 
         // 2. 분산락으로 동시 결제 요청 직렬화
         String lockKey = "payment:member:" + request.getMemberId();
-        return distributedLock.execute(
-                lockKey,
-                3,
-                5,
-                () -> processPayment(request));
+        try {
+            return distributedLock.execute(
+                    lockKey,
+                    3,
+                    5,
+                    () -> processPayment(request));
+        } catch (Exception e) {
+            // 결제 실패 시 멱등키 삭제 → 클라이언트가 동일 키로 재시도 가능
+            redisTemplate.delete(redisKey);
+            log.warn("[멱등키 삭제] 결제 실패로 멱등키 제거 key={}", redisKey);
+            throw e;
+        }
     }
 
-    protected Payment processPayment(PaymentRequestDto request) {
+    /**
+     * 실제 결제 처리 로직
+     * 분산락 내부에서 실행되며, @Transactional은 pay()에서 이미 시작된 트랜잭션을 이어받음
+     */
+    private Payment processPayment(PaymentRequestDto request) {
         PaymentMember member = memberRepository.findById(request.getMemberId())
                 .orElseThrow(MemberException.NotFoundException::new);
 
